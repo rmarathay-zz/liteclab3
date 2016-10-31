@@ -1,0 +1,83 @@
+compiler directives
+Function Prototypes
+	Port_Init, PCA_Init, XBR0_Init, PCA_ISR, SMB_Init, startPing, ReadCompass, ReadRanger, wait, Steering_Servo, Motor_Control
+Declare Global Variables
+	heading count, new heading, heading, heading_, r_count, new range, range_, range, PW center, PW motor, PW steering addr, Data, counts
+
+Start Main Function
+	declare local variables
+	initialize functions
+	
+	print beginning message
+	set PCA output to a neutral setting
+	set motor initial value
+	set servo motor in neutral
+	wait
+
+	begin infinte loop
+		if new heading
+			clear new heading
+			call read compass function
+		if slide switch on
+		if new range
+			clear new range
+			call read ranger function
+		if range_ is less than 10
+			set to pw max
+		else if range_ is greater than or equal to 40 and range_ is less than or equal to 50
+			set to pw center
+		else if range_ is greater than 90
+			set pw to pw min
+		print pw_m and range_
+		set servo PCA0CP0
+		set motor PCA0CP2
+	end infinite loop
+end main function
+
+functions
+
+port function start
+	set ports for inputs and outputs
+end port function
+
+XBR0 function start
+	set up crossbar
+XBR0 end
+
+PCA initiate start
+	set up programmable counter array
+		pulse width modulation
+		implement using PCA
+		use 16-bit and SYSCLK/12
+		enable PCA counter
+end PCA
+
+start SMB initiate
+	configure ranger and compass
+end SMB initiate
+
+PCA ISR start
+	ISR for PCA overflow interrupt (9)
+		Pulse width modulation
+		implent using PCA
+end PCA ISR
+
+start wait
+	wait for dorection change
+end wait
+
+steering start
+	address sensor
+	reset heading
+	read 2 byte starting at 2
+	combine two values
+	return heading in degrees
+end steering
+
+drive motor start
+	address motor
+	reset range
+	read 2 bytes starting at 2
+	combine two values
+	return range
+end drive motor

@@ -1,0 +1,67 @@
+compiler directives
+Function Prototypes
+	Port_Init, XBR0_Init, Steering_Servo, PCA_ISR, PCA_Init, Drive_Motor
+Declare Global Variables
+	PW_CENTER, PW_MIN, PW_MAX, PW = 0, PW_NEUT
+
+Start Main Function
+	declare local variables
+	initialize functions
+		system, putchar, port, XBR0, PCA
+	
+	print beginning message (steering calibration)
+	set PCA output to a neutral setting
+	set PW to PW_center
+
+	print beginning messgae (drive motor control)
+	set initial value
+	set servo motor in neutral for 1 second
+
+	begin infinte loop
+		call steering function
+		call drive motor function
+	end infinite loop
+end main function
+
+functions
+
+port function start
+	set ports for inputs and outputs
+end port function
+
+XBR0 function start
+	set up crossbar
+XBR0 end
+
+PCA initiate start
+	set up programmable counter array
+		pulse width modulation
+		implement using PCA
+		use 16-bit and SYSCLK/12
+end PCA
+
+PCA ISR start
+	ISR for PCA overflow interrupt (9)
+		Pulse width modulation
+		implent using PCA
+end PCA ISR
+
+steering start
+	wait for key to be pressed
+	if input increses pulsewidth
+		check if less then pulsewidth min.
+		set PW to min value
+	else if input decreses pulsewidth
+		check if max pulsewidth exceeded
+		set PW to max value
+	print PW
+	calculate PCA0CP0
+end steering
+
+drive motor start
+	wait for key to be pressed
+	if f is pressed
+		if motor PW less than max PW
+		increase steering PW by 10
+	calculate PCA0CP2
+end drive motor
